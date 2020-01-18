@@ -35,7 +35,7 @@ public class ReceiveController {
 
     public static final String owner = "MestonIndustries";
     public static final String commodity = "DeliveryItem";
-    public static final String apiEndpoint = "https://trustlens.abdn.ac.uk/doors/api/Delivery";
+    public static final String apiEndpoint = "http://localhost:3000/api/Delivery";
 
     @PostMapping(value = "/transaction")
     public ResponseEntity addToBlockchain(@RequestBody String rawPayload) throws IOException {
