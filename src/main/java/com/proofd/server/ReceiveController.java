@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.proofd.knowledgbase.UniversityCateringPlan;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -18,6 +20,7 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.*;
 import org.apache.http.util.EntityUtils;
+import org.apache.jena.rdf.model.Model;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +44,16 @@ public class ReceiveController {
     public ResponseEntity addToBlockchain(@RequestBody String rawPayload) throws IOException {
         JsonObject req = new JsonObject();
         JsonObject payload = JsonParser.parseString(rawPayload).getAsJsonObject();
-        req.addProperty("complianceReport", rawPayload);
+        //System.out.println(payload);
+        
+        UniversityCateringPlan plan = new UniversityCateringPlan (payload);
+        Model m = plan.getModel();
+        StringWriter sw = new StringWriter();
+        m.write (sw,"TTL");
+        String trace = sw.toString();
+        
+       
+        req.addProperty("complianceReport", trace);
         req.addProperty("status", payload.get("status").getAsString());
         req.addProperty("newOwner", owner);
         req.addProperty("commodity", commodity);
@@ -66,6 +78,8 @@ public class ReceiveController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
         }
         return ResponseEntity.ok(responseBody);
+        
+        
     }
 
     @PostMapping(value = "/save")
