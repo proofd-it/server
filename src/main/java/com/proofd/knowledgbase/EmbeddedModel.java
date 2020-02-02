@@ -9,6 +9,7 @@ import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.util.FileManager;
 
 
+
 public class EmbeddedModel {
 
 	Model model;
@@ -21,9 +22,9 @@ public class EmbeddedModel {
 		 model.setNsPrefix("prov","http://www.w3.org/ns/prov#");	
 	}
 	
-	public static void main(String[] args) {
-		 new EmbeddedModel ();
-	}
+//	public static void main(String[] args) {
+//		 new EmbeddedModel ();
+//	}
 
 	public Model getModel() {
 		return model;
