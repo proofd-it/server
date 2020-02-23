@@ -15,6 +15,7 @@ import org.apache.jena.riot.RDFFormat;
 import org.apache.jena.riot.RDFLanguages;
 import org.apache.jena.vocabulary.RDF;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -24,7 +25,13 @@ public class UniversityCateringPlan {
 	String prov= "http://www.w3.org/ns/prov#";
 	String ucp ="https://github.com/proofd-it/Ontologies/deliveryCateringPlan1.ttl#";
 	String epplan ="https://w3id.org/ep-plan#";
+	String proofdit ="https://w3id.org/proofd-it#";
+	String sosa ="http://www.w3.org/ns/sosa/";
+	
+	String deliveryID="";
 	Model m;
+	
+	
 	
 	
 	
@@ -41,6 +48,12 @@ public class UniversityCateringPlan {
 	
    private void createExecutionActivityRecord(JsonObject payload, Model m) {
 	   Resource puckAgent = null;
+	  
+	   if (payload.get("deliveryID")!=null) {
+		   deliveryID =  payload.get("deliveryID").getAsString();
+		   System.out.println(deliveryID);
+		  }
+	   
 	  if (payload.get("puckID")!=null) {
 	   puckAgent =  m.createResource(pt+ "Puck/"+payload.get("puckID").getAsString());
 	  }
@@ -63,11 +76,13 @@ public class UniversityCateringPlan {
 	  execActivity.addProperty(m.getProperty(prov+"wasAssociatedWith"), cateringAgent);
 	  execActivity.addProperty(m.getProperty(prov+"qualifiedAssociation"), qualifiedassociation);
 	  
-	  linkresultsToPlanconstrains (execActivity,puckAgent, m, payload);
+	  
 	  
 	  Resource execBundle =  m.createResource(pt+ UUID.randomUUID());
 	  execBundle.addProperty(RDF.type, m.getResource(epplan+"ExecutionTraceBundle"));
 	  execBundle.addProperty(m.getProperty(prov+"wasInfluencedBy"), execActivity);
+	  
+	  linkresultsToPlanconstrains (execActivity,execBundle,puckAgent, m, payload);
 	  
 	  createTrace  (execBundle, m, payload,puckAgent);
    }
@@ -91,8 +106,7 @@ private void createTrace(Resource execBundle, Model m, JsonObject payload, Resou
 		        		activity.addProperty(m.getProperty(epplan+"correspondsToStep"), m.getResource(ucp+"ColdStorage"));
 		        		linkToTrace(execBundle,activity,m);
 		        		
-		        		//Continue adding provenance of the PUCK.js sensor evaluating constraints based on location and temperature readings
-		        		Resource qualifiedEval = linktraceElementToConstraint (m.getResource(ucp+"ColdStorageConstraint"),  activity, puckAgent,  m,  element);
+		        		
 		        		
 		        		if (startOfworkflow) {
 		        			/*
@@ -125,18 +139,23 @@ private void createTrace(Resource execBundle, Model m, JsonObject payload, Resou
 		        			addTimestamp (lastEntity,element,m);
 		        			linkToTrace(execBundle,lastEntity,m);
 		        			lastEntity.addProperty(m.getProperty(prov+"wasGeneratedBy"), activity);
+		        			lastEntity.addProperty(m.getProperty(proofdit+"deliveryID"), m.createTypedLiteral(deliveryID));
+		        			
+		        			
 		        		}
 		        		
+		        		//Continue adding provenance of the PUCK.js sensor evaluating constraints based on location and temperature readings
+		        		Resource qualifiedEval = linktraceElementToConstraint (m.getResource(ucp+"ColdStorageConstraint"),  activity, puckAgent, lastEntity, m,  element);
 		        		
 		        	}
 		        	if (state.equals("outside")) {
 		        		activity = m.createResource(pt+ UUID.randomUUID());
 		        		activity.addProperty(RDF.type, m.getResource(epplan+"Activity"));
-		        		activity.addProperty(m.getProperty(epplan+"correspondsToStep"), m.getResource(ucp+"AmbientTemperatureStroage"));
-		        		
+		        		activity.addProperty(m.getProperty(epplan+"correspondsToStep"), m.getResource(ucp+"AmbientTemperatureStorage"));
+		        		linkToTrace(execBundle,activity,m);
 		        		//Continue adding provenance of the PUCK.js sensor evaluating constraints based on location and temperature readings
 		        		
-		        		Resource qualifiedEval = linktraceElementToConstraint (m.getResource(ucp+"AmbientStorageConstraint"),  activity, puckAgent,  m,  element);
+		        		
 		        		
 		        		if (startOfworkflow) {
 		        			
@@ -157,14 +176,57 @@ private void createTrace(Resource execBundle, Model m, JsonObject payload, Resou
 		        			addTimestamp (lastEntity,element,m);
 		        			linkToTrace(execBundle,lastEntity,m);
 		        			lastEntity.addProperty(m.getProperty(prov+"wasGeneratedBy"), activity);
+		        			lastEntity.addProperty(m.getProperty(proofdit+"deliveryID"), m.createTypedLiteral(deliveryID));
 		        		}
+		        		
+		        		Resource qualifiedEval = linktraceElementToConstraint (m.getResource(ucp+"AmbientStorageConstraint"),  activity, puckAgent, lastEntity, m,  element);
 		        		
 		        	}
 		        }
 		 }
 		 
+		 //add the receipt info
+		 
+		 receiptOfGoods (lastEntity,execBundle, payload,m);
+		 
+		 
 	}
 	
+}
+
+
+private void receiptOfGoods (Resource lastEntity,Resource execBundle, JsonObject payload, Model m) {
+	
+	 if ( payload.getAsJsonObject().get("status") != null) {
+		if (payload.getAsJsonObject().get("status").getAsString().equals("rejected")||payload.getAsJsonObject().get("status").getAsString() .equals("accepted")) {
+		System.out.println("here")	;	
+		Resource activity =  m.createResource(pt+ UUID.randomUUID());
+		activity.addProperty(RDF.type, m.getResource(epplan+"Activity"));
+		activity.addProperty(m.getProperty(epplan+"correspondsToStep"), m.getResource(ucp+"RecievedByCustomer"));
+		activity.addProperty(m.getProperty(prov+"used"), lastEntity);
+		linkToTrace(execBundle,activity,m);
+		
+		Resource deliveredItem = m.createResource(pt+ UUID.randomUUID());
+		deliveredItem.addProperty(RDF.type, m.getResource(epplan+"Entity"));
+		deliveredItem.addProperty(m.getProperty(epplan+"correspondsToVariable"), m.getResource(ucp+"DeliveredItem"));
+		deliveredItem.addProperty(m.getProperty(prov+"wasGeneratedBy"), activity);
+		deliveredItem.addProperty(m.getProperty(proofdit+"deliveryID"), m.createTypedLiteral(deliveryID));
+		linkToTrace(execBundle,deliveredItem,m);
+		
+		Resource deliveryResult = m.createResource(pt+ UUID.randomUUID());
+		deliveryResult.addProperty(RDF.type, m.getResource(epplan+"Entity"));
+		deliveryResult.addProperty(m.getProperty(epplan+"correspondsToVariable"), m.getResource(ucp+"DeliveryResult"));
+		deliveryResult.addProperty(m.getProperty(prov+"wasGeneratedBy"), activity);
+		deliveryResult.addProperty(m.getProperty(prov+"value"), m.createTypedLiteral(payload.getAsJsonObject().get("status").getAsString()));
+		linkToTrace(execBundle,deliveryResult,m);
+		
+		
+		}
+		
+		
+		
+		
+	 }
 }
 
 
@@ -177,15 +239,22 @@ private Resource  generateStartWorkflow (Resource activity, Resource generatedEn
 	linkToTrace(execBundle,entity,m);
 	activity.addProperty(m.getProperty(prov+"used"), entity);
 	
+	entity.addProperty(m.getProperty(proofdit+"deliveryID"), m.createTypedLiteral(deliveryID));
+	
 	Resource lastEntity = m.createResource(pt+ UUID.randomUUID());
 	lastEntity.addProperty(RDF.type, m.getResource(epplan+"Entity"));
 	lastEntity.addProperty(m.getProperty(epplan+"correspondsToVariable"), generatedEntityCorrespondingStep);
 	lastEntity.addProperty(m.getProperty(prov+"wasGeneratedBy"), activity);
 	addTimestamp (lastEntity,element,m);
+	
+	lastEntity.addProperty(m.getProperty(proofdit+"deliveryID"), m.createTypedLiteral(deliveryID));
+	
 	linkToTrace(execBundle,lastEntity,m);
 	
 	return lastEntity;
 }
+
+
 
 private void addTimestamp (Resource entity, JsonElement element, Model m){
 	
@@ -220,17 +289,18 @@ private void linkToTrace (Resource traceBundle, Resource element, Model m) {
 }
 
 
-private Resource qualifyConstraintEval (Resource agent, Resource constraint, Resource activity, Model m) {
+private Resource qualifyConstraintEval (Resource agent, Resource basedOn, Resource constraint, Resource activity, Model m) {
 	Resource constraintEval = m.createResource(pt+ UUID.randomUUID());
 	constraintEval.addProperty(RDF.type, m.getResource(epplan+"ConstraintEvaluation"));
 	constraintEval.addProperty(m.getProperty(epplan+"evaluatedTraceElement"), activity);
-	constraintEval.addProperty(m.getProperty(prov+"wasAttributedTo"), agent);
+	constraintEval.addProperty(m.getProperty(proofdit+"assessedBy"), agent);
+	constraintEval.addProperty(m.getProperty(proofdit+"basedOn"), basedOn);
 	constraint.addProperty(m.getProperty(epplan+"qualifiedEvaluation"), constraintEval);
 	
 	return constraintEval;
 }
 
-private Resource linktraceElementToConstraint (Resource constraint, Resource activity,Resource puckAgent, Model m, JsonElement element) {
+private Resource linktraceElementToConstraint (Resource constraint, Resource activity,Resource puckAgent, Resource foodItem, Model m, JsonElement element) {
 	Resource constraintEval = null;  
 	if (element.getAsJsonObject().get("assessment")!= null) {
 	
@@ -241,18 +311,71 @@ private Resource linktraceElementToConstraint (Resource constraint, Resource act
 		 activity.addProperty(m.getProperty(epplan+"violated"), constraint); 
 	 }
 		
-		
-	 constraintEval = qualifyConstraintEval (puckAgent, constraint,  activity,  m);
+	
+	 //sensing provenance 
+	 Resource multiSensing = m.createResource(pt+ UUID.randomUUID());
+	 multiSensing.addProperty(RDF.type, m.getResource(proofdit+"MultiSensingActivity")); 
+	 multiSensing.addProperty(m.getProperty(prov+"wasAssociatedWith"), puckAgent);
+	 multiSensing.addProperty(m.getProperty(sosa+"hasFeatureOfInterest"), foodItem);
+	 
+	 Resource collection = m.createResource(pt+ UUID.randomUUID());
+	 collection.addProperty(RDF.type, m.getResource(proofdit+"ObservationCollection")); 
+	 collection.addProperty(m.getProperty(proofdit+"unit"), m.getResource("http://www.ontology-of-units-of-measure.org/resource/om-2/CelsiusScale"));
+	 collection.addProperty(m.getProperty(prov+"wasGeneratedBy"), multiSensing);
+	 
+	
+	 
+	 
+	 if (element.getAsJsonObject().get("average")!= null) {
+		 int average = element.getAsJsonObject().get("average").getAsInt();
+		 collection.addProperty(m.getProperty(proofdit+"average"), m.createTypedLiteral(average));	 
+	 }
+	 
+	 if (element.getAsJsonObject().get("totalReadings")!= null) {
+		 int totalReadings = element.getAsJsonObject().get("totalReadings").getAsInt();
+		 collection.addProperty(m.getProperty(proofdit+"numberOfReadings"), m.createTypedLiteral(totalReadings));	 
+	 }
+	 
+	 if (element.getAsJsonObject().get("data")!= null) {
+		 JsonArray data = element.getAsJsonObject().get("data").getAsJsonArray();
+		 Iterator<JsonElement> it = data.iterator();
+		 
+		 SimpleDateFormat formatter = new SimpleDateFormat("E MMM dd yyyy HH:mm:ss");
+		 
+		 while (it.hasNext()) {
+			 element = it.next();
+			 Resource reading = m.createResource(pt+ UUID.randomUUID());
+			 //System.out.println (it.next().getAsJsonObject().get("y"));
+			 reading.addProperty(m.getProperty(prov+"value"),  m.createTypedLiteral(element.getAsJsonObject().get("y").getAsDouble()));
+			 reading.addProperty(RDF.type, m.getResource(proofdit+"SampleObservation")); 
+			 try {
+				reading.addProperty(m.getProperty(prov+"generatedAtTime"),m.createTypedLiteral((formatter.parse(element.getAsJsonObject().get("t").getAsString()).getTime())));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			 collection.addProperty(m.getProperty(prov+"hadMember"), reading);
+		 }
+			 
+	 }
+	 
+	 constraintEval = qualifyConstraintEval (puckAgent,collection, constraint,  activity,  m);
 	
 	}
 	
 	return constraintEval;
 }
 
-private void linkresultsToPlanconstrains(Resource execActivity, Resource puckAgent, Model m, JsonObject payload) {
+
+
+
+private void linkresultsToPlanconstrains(Resource execActivity, Resource puckAgent, Resource tracebundle, Model m, JsonObject payload) {
 	
 	
-	
+	/*
+	 * Removed overal compliance constraint. If you put it back in the plan add this method
+	 */
+	/*
 	//check if any stage was non-compliant and if so then add the compliance as not satisfied
 	if (payload.getAsJsonArray("states")!= null) {
 		
@@ -281,7 +404,7 @@ private void linkresultsToPlanconstrains(Resource execActivity, Resource puckAge
 		
 			 
 	}
-	
+	*/
 	//handle out of cold storage constraints
 	
   //  System.out.println(payload.getAsJsonObject("warning").get("code"));
@@ -291,9 +414,10 @@ private void linkresultsToPlanconstrains(Resource execActivity, Resource puckAge
 		
 		Iterator<JsonElement>  it = payload.getAsJsonArray("warnings").iterator();
 		
-		boolean max_time_one_stage_outside = true;
+		boolean max_combined_time_fridge = true;
 		boolean max_number_of_times_outside = true;
 		boolean max_combined_time_outside = true;
+		boolean max_combined_time_transport = true;
 		
 		while (it.hasNext()) {
 		JsonElement element = it.next();
@@ -301,29 +425,22 @@ private void linkresultsToPlanconstrains(Resource execActivity, Resource puckAge
 		int code = ((JsonObject) element).get("code").getAsInt();
 		
 		switch (code){
-        case 1:  max_time_one_stage_outside = false;
+        case 1:  max_number_of_times_outside = false;
         break;
-        case 2:  max_number_of_times_outside = false;
+        case 2:   max_combined_time_outside = false;
         break;
-        case 3:  max_combined_time_outside = false;
+        case 3:   max_combined_time_fridge	 = false;
+        break;
+        case 4:  max_combined_time_transport = false;
         break;
         }
 		
 		}
 		}
 		
-		Resource constraint = m.getResource("https://github.com/proofd-it/Ontologies/deliveryCateringPlan1.ttl#MaxSingleStageAmbientStorageTime");
-		qualifyConstraintEval (puckAgent, constraint, execActivity,  m);
 		
-		if (max_time_one_stage_outside) {
-			execActivity.addProperty(m.getProperty(epplan+"satisfied"),constraint);
-		}
-		else {
-			execActivity.addProperty(m.getProperty(epplan+"violated"), constraint);
-		}
-		
-		constraint = m.getResource("https://github.com/proofd-it/Ontologies/deliveryCateringPlan1.ttl#MaxNumberOfAmbientStorageStages");
-		qualifyConstraintEval (puckAgent, constraint, execActivity,  m);
+		Resource constraint = m.getResource("https://github.com/proofd-it/Ontologies/deliveryCateringPlan1.ttl#MaxNumberOfAmbientStorageStages");
+		qualifyConstraintEval (puckAgent,tracebundle, constraint, execActivity,  m);
 		
 		if (max_number_of_times_outside) {
 			execActivity.addProperty(m.getProperty(epplan+"satisfied"), constraint);
@@ -333,14 +450,34 @@ private void linkresultsToPlanconstrains(Resource execActivity, Resource puckAge
 		}
 		
 		constraint = m.getResource("https://github.com/proofd-it/Ontologies/deliveryCateringPlan1.ttl#MaxCombinedAmbientStorageTime");
-		qualifyConstraintEval (puckAgent, constraint, execActivity,  m);
+		qualifyConstraintEval (puckAgent, tracebundle, constraint, execActivity,  m);
 		
 		if (max_combined_time_outside) {
 			execActivity.addProperty(m.getProperty(epplan+"satisfied"), constraint);
 		}
 		else {
 			execActivity.addProperty(m.getProperty(epplan+"violated"), constraint);
-		}		
+		}	
+		
+		constraint = m.getResource("https://github.com/proofd-it/Ontologies/deliveryCateringPlan1.ttl#MaxCombinedFridgeStorageTime");
+		qualifyConstraintEval (puckAgent, tracebundle, constraint, execActivity,  m);
+		
+		if (max_combined_time_fridge) {
+			execActivity.addProperty(m.getProperty(epplan+"satisfied"), constraint);
+		}
+		else {
+			execActivity.addProperty(m.getProperty(epplan+"violated"), constraint);
+		}
+		
+		constraint = m.getResource("https://github.com/proofd-it/Ontologies/deliveryCateringPlan1.ttl#MaxCombinedTransportStorageTime");
+		qualifyConstraintEval (puckAgent, tracebundle, constraint, execActivity,  m);
+		
+		if (max_combined_time_transport) {
+			execActivity.addProperty(m.getProperty(epplan+"satisfied"), constraint);
+		}
+		else {
+			execActivity.addProperty(m.getProperty(epplan+"violated"), constraint);
+		}
 	}	
 }
 

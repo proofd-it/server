@@ -42,14 +42,17 @@ public class ReceiveController {
 
     @PostMapping(value = "/transaction")
     public ResponseEntity addToBlockchain(@RequestBody String rawPayload) throws IOException {
+  //  public void addToBlockchain(@RequestBody String rawPayload) throws IOException {
         JsonObject req = new JsonObject();
         JsonObject payload = JsonParser.parseString(rawPayload).getAsJsonObject();
-        //System.out.println(payload);
+        System.out.println(payload);
         
         UniversityCateringPlan plan = new UniversityCateringPlan (payload);
         Model m = plan.getModel();
         StringWriter sw = new StringWriter();
-        m.write (sw,"TTL");
+       m.write (sw,"TTL");
+       // m.write (System.out,"TTL");
+     
         String trace = sw.toString();
         
        
@@ -78,7 +81,7 @@ public class ReceiveController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
         }
         return ResponseEntity.ok(responseBody);
-        
+      
         
     }
 
