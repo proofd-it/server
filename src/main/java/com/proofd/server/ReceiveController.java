@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.proofd.knowledgbase.UniversityCateringPlan;
+import com.proofd.knowledgebase.UniversityCateringPlan;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
@@ -42,7 +42,7 @@ public class ReceiveController {
 
     @PostMapping(value = "/transaction")
     public ResponseEntity addToBlockchain(@RequestBody String rawPayload) throws IOException {
-  //  public void addToBlockchain(@RequestBody String rawPayload) throws IOException {
+   //public void addToBlockchain(@RequestBody String rawPayload) throws IOException {
         JsonObject req = new JsonObject();
         JsonObject payload = JsonParser.parseString(rawPayload).getAsJsonObject();
         System.out.println(payload);
@@ -52,7 +52,8 @@ public class ReceiveController {
         StringWriter sw = new StringWriter();
        m.write (sw,"TTL");
        // m.write (System.out,"TTL");
-     
+    
+    
         String trace = sw.toString();
         
        

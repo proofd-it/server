@@ -1,0 +1,202 @@
+@prefix : <https://github.com/proofd-it/Ontologies/deliveryCateringPlan1.ttl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <https://github.com/proofd-it/Ontologies/deliveryCateringPlan1.ttl> .
+
+<https://github.com/proofd-it/Ontologies/deliveryCateringPlan1.ttl> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://purl.org/net/p-plan#isStepOfPlan
+<http://purl.org/net/p-plan#isStepOfPlan> rdf:type owl:ObjectProperty .
+
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#isRequiredResourceFor
+<https://w3id.org/abdn/foodsafety/fs-prov#isRequiredResourceFor> rdf:type owl:ObjectProperty .
+
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#isResultOf
+<https://w3id.org/abdn/foodsafety/fs-prov#isResultOf> rdf:type owl:ObjectProperty .
+
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#restrics
+<https://w3id.org/abdn/foodsafety/fs-prov#restrics> rdf:type owl:ObjectProperty .
+
+
+###  https://w3id.org/ep-plan#hasConstraint
+<https://w3id.org/ep-plan#hasConstraint> rdf:type owl:ObjectProperty .
+
+
+###  https://w3id.org/ep-plan#isConstraintOfPlan
+<https://w3id.org/ep-plan#isConstraintOfPlan> rdf:type owl:ObjectProperty .
+
+
+###  https://w3id.org/ep-plan#isStepOfPlan
+<https://w3id.org/ep-plan#isStepOfPlan> rdf:type owl:ObjectProperty .
+
+
+###  https://w3id.org/ep-plan#isVariableOfPlan
+<https://w3id.org/ep-plan#isVariableOfPlan> rdf:type owl:ObjectProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#HaccpConstraint
+<https://w3id.org/abdn/foodsafety/fs-prov#HaccpConstraint> rdf:type owl:Class .
+
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#HaccpStep
+<https://w3id.org/abdn/foodsafety/fs-prov#HaccpStep> rdf:type owl:Class .
+
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#PhysicalObject
+<https://w3id.org/abdn/foodsafety/fs-prov#PhysicalObject> rdf:type owl:Class .
+
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#Plan
+<https://w3id.org/abdn/foodsafety/fs-prov#Plan> rdf:type owl:Class .
+
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#Resource
+<https://w3id.org/abdn/foodsafety/fs-prov#Resource> rdf:type owl:Class .
+
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#Step
+<https://w3id.org/abdn/foodsafety/fs-prov#Step> rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  https://github.com/proofd-it/Ontologies/deliveryCateringPlan1.ttl#AmbientStorageConstraint
+:AmbientStorageConstraint rdf:type owl:NamedIndividual ,
+                                   <https://w3id.org/abdn/foodsafety/fs-prov#HaccpConstraint> ;
+                          <https://w3id.org/abdn/foodsafety/fs-prov#restrics> :OutOfColdStorageItem ;
+                          <https://w3id.org/ep-plan#isConstraintOfPlan> :UniversityCateringSandwichDeliveryPlan ;
+                          rdfs:label "Ambient Storage Constraint" .
+
+
+###  https://github.com/proofd-it/Ontologies/deliveryCateringPlan1.ttl#AmbientTemperatureStorage
+:AmbientTemperatureStorage rdf:type owl:NamedIndividual ,
+                                    <https://w3id.org/abdn/foodsafety/fs-prov#HaccpStep> ;
+                           <http://purl.org/net/p-plan#isStepOfPlan> :UniversityCateringSandwichDeliveryPlan ;
+                           <https://w3id.org/ep-plan#hasConstraint> :AmbientStorageConstraint ;
+                           rdfs:comment "Step describing the part of a food delivery workflow where food is not stored in a refrigirator or is teh transport stage (i.e. the final leg of the delivery proces)" ;
+                           rdfs:label "Ambient Temperature Storage" .
+
+
+###  https://github.com/proofd-it/Ontologies/deliveryCateringPlan1.ttl#ChilledItem
+:ChilledItem rdf:type owl:NamedIndividual ,
+                      <https://w3id.org/abdn/foodsafety/fs-prov#PhysicalObject> ;
+             <https://w3id.org/abdn/foodsafety/fs-prov#isRequiredResourceFor> :AmbientTemperatureStorage ;
+             <https://w3id.org/abdn/foodsafety/fs-prov#isResultOf> :ColdStorage ;
+             <https://w3id.org/ep-plan#isVariableOfPlan> :UniversityCateringSandwichDeliveryPlan ;
+             rdfs:comment "A food item that is stored in the refrigirator" ;
+             rdfs:label "Chilled Item" .
+
+
+###  https://github.com/proofd-it/Ontologies/deliveryCateringPlan1.ttl#ColdStorage
+:ColdStorage rdf:type owl:NamedIndividual ,
+                      <https://w3id.org/abdn/foodsafety/fs-prov#HaccpStep> ;
+             <https://w3id.org/ep-plan#hasConstraint> :ColdStorageConstraint ;
+             <https://w3id.org/ep-plan#isStepOfPlan> :UniversityCateringSandwichDeliveryPlan ;
+             rdfs:comment "Food is intended to be kept below the required HACP temperature threshold for cold storage" ;
+             rdfs:label "Cold Storage" .
+
+
+###  https://github.com/proofd-it/Ontologies/deliveryCateringPlan1.ttl#ColdStorageConstraint
+:ColdStorageConstraint rdf:type owl:NamedIndividual ,
+                                <https://w3id.org/abdn/foodsafety/fs-prov#HaccpConstraint> ;
+                       <https://w3id.org/abdn/foodsafety/fs-prov#restrics> :ChilledItem ;
+                       <https://w3id.org/ep-plan#isConstraintOfPlan> :UniversityCateringSandwichDeliveryPlan ;
+                       rdfs:label "Cold Storage Constraint" .
+
+
+###  https://github.com/proofd-it/Ontologies/deliveryCateringPlan1.ttl#DeliveredItem
+:DeliveredItem rdf:type owl:NamedIndividual ,
+                        <https://w3id.org/abdn/foodsafety/fs-prov#PhysicalObject> ;
+               <https://w3id.org/abdn/foodsafety/fs-prov#isResultOf> :RecievedByCustomer ;
+               <https://w3id.org/ep-plan#isVariableOfPlan> :UniversityCateringSandwichDeliveryPlan ;
+               rdfs:comment "A food item that has been delivered" ;
+               rdfs:label "Delivered Item" .
+
+
+###  https://github.com/proofd-it/Ontologies/deliveryCateringPlan1.ttl#DeliveryResult
+:DeliveryResult rdf:type owl:NamedIndividual ,
+                         <https://w3id.org/abdn/foodsafety/fs-prov#Resource> ;
+                <https://w3id.org/abdn/foodsafety/fs-prov#isResultOf> :RecievedByCustomer ;
+                <https://w3id.org/ep-plan#isVariableOfPlan> :UniversityCateringSandwichDeliveryPlan ;
+                rdfs:label "Delivery Result" .
+
+
+###  https://github.com/proofd-it/Ontologies/deliveryCateringPlan1.ttl#InTransitItem
+:InTransitItem rdf:type owl:NamedIndividual ,
+                        <https://w3id.org/abdn/foodsafety/fs-prov#PhysicalObject> ;
+               <https://w3id.org/ep-plan#isVariableOfPlan> :UniversityCateringSandwichDeliveryPlan ;
+               rdfs:comment "A food item in the transport stage" ;
+               rdfs:label "In Transit Item" .
+
+
+###  https://github.com/proofd-it/Ontologies/deliveryCateringPlan1.ttl#OutOfColdStorageItem
+:OutOfColdStorageItem rdf:type owl:NamedIndividual ,
+                               <https://w3id.org/abdn/foodsafety/fs-prov#PhysicalObject> ;
+                      <https://w3id.org/abdn/foodsafety/fs-prov#isRequiredResourceFor> :RecievedByCustomer ;
+                      <https://w3id.org/abdn/foodsafety/fs-prov#isResultOf> :AmbientTemperatureStorage ;
+                      <https://w3id.org/ep-plan#isVariableOfPlan> :UniversityCateringSandwichDeliveryPlan ;
+                      rdfs:label "Out Of Cold Storage Item" .
+
+
+###  https://github.com/proofd-it/Ontologies/deliveryCateringPlan1.ttl#PackedItem
+:PackedItem rdf:type owl:NamedIndividual ,
+                     <https://w3id.org/abdn/foodsafety/fs-prov#PhysicalObject> ;
+            <https://w3id.org/abdn/foodsafety/fs-prov#isRequiredResourceFor> :ColdStorage ;
+            <https://w3id.org/ep-plan#isVariableOfPlan> :UniversityCateringSandwichDeliveryPlan ;
+            rdfs:comment "A food item that has been prepared for delivery" ;
+            rdfs:label "Packed Item" .
+
+
+###  https://github.com/proofd-it/Ontologies/deliveryCateringPlan1.ttl#RecievedByCustomer
+:RecievedByCustomer rdf:type owl:NamedIndividual ,
+                             <https://w3id.org/abdn/foodsafety/fs-prov#Step> ;
+                    <http://purl.org/net/p-plan#isStepOfPlan> :UniversityCateringSandwichDeliveryPlan ;
+                    rdfs:comment "The part of a food delivery workflow when the delivery is accepted/rejected by the customer." ;
+                    rdfs:label "ReceivedByCustomer" .
+
+
+###  https://github.com/proofd-it/Ontologies/deliveryCateringPlan1.ttl#TotalNumberOfAmbientTemperatureStorageStages
+:TotalNumberOfAmbientTemperatureStorageStages rdf:type owl:NamedIndividual ,
+                                                       <https://w3id.org/abdn/foodsafety/fs-prov#HaccpConstraint> ;
+                                              <https://w3id.org/ep-plan#isConstraintOfPlan> :UniversityCateringSandwichDeliveryPlan .
+
+
+###  https://github.com/proofd-it/Ontologies/deliveryCateringPlan1.ttl#TotalTimeAllowedForAmbientTemperatureStorage
+:TotalTimeAllowedForAmbientTemperatureStorage rdf:type owl:NamedIndividual ,
+                                                       <https://w3id.org/abdn/foodsafety/fs-prov#HaccpConstraint> ;
+                                              <https://w3id.org/ep-plan#isConstraintOfPlan> :UniversityCateringSandwichDeliveryPlan .
+
+
+###  https://github.com/proofd-it/Ontologies/deliveryCateringPlan1.ttl#TotalTimeAllowedForColdStorage
+:TotalTimeAllowedForColdStorage rdf:type owl:NamedIndividual ,
+                                         <https://w3id.org/abdn/foodsafety/fs-prov#HaccpConstraint> ;
+                                <https://w3id.org/ep-plan#isConstraintOfPlan> :UniversityCateringSandwichDeliveryPlan .
+
+
+###  https://github.com/proofd-it/Ontologies/deliveryCateringPlan1.ttl#UniversityCateringSandwichDeliveryPlan
+:UniversityCateringSandwichDeliveryPlan rdf:type owl:NamedIndividual ,
+                                                 <https://w3id.org/abdn/foodsafety/fs-prov#Plan> ;
+                                        <https://w3id.org/ep-plan#hasConstraint> :TotalNumberOfAmbientTemperatureStorageStages ,
+                                                                                 :TotalTimeAllowedForAmbientTemperatureStorage ,
+                                                                                 :TotalTimeAllowedForColdStorage ;
+                                        rdfs:comment "A plan describing intended workflow for delivering food to events within th eAberdeen University campus. The plan starts from the point when the food is prepared for delivery and intented to be store in chilled storage before it is delivered." ;
+                                        rdfs:label "Food delivery plan" .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

@@ -1,0 +1,328 @@
+@prefix fs-prov-mapping: <https://w3id.org/abdn/foodsafety/fs-prov_mapping_to_ep-plan#> .
+@prefix ucp:   <https://github.com/proofd-it/Ontologies/deliveryCateringPlan1.ttl#> .
+@prefix ep-plan: <https://w3id.org/ep-plan#> .
+@prefix prov:  <http://www.w3.org/ns/prov#> .
+@prefix fs-prov: <https://w3id.org/abdn/foodsafety/fs-prov#> .
+@prefix prov-trace: <https://github.com/proofd-it/prov-trace#> .
+
+prov-trace:a60e8669-52b3-4e17-8db7-db6b09db1ad9
+        a                     prov:Entity , <https://w3id.org/proofd-it#SampleObservation> ;
+        prov:generatedAtTime  "1582026124000"^^<http://www.w3.org/2001/XMLSchema#long> ;
+        prov:value            "27.875"^^<http://www.w3.org/2001/XMLSchema#double> .
+
+prov-trace:a19e6246-75a4-414b-9a32-5140df168b4a
+        a                       <http://www.w3.org/ns/sosa/Observation> , prov:Activity , <https://w3id.org/proofd-it#MultiSensingActivity> ;
+        prov:wasAssociatedWith  <https://github.com/proofd-it/prov-trace#Puck/notCompliant> ;
+        <http://www.w3.org/ns/sosa/hasFeatureOfInterest>
+                prov-trace:670761ff-baf9-4ed5-b41d-c68e39e9a12a ;
+        <http://www.w3.org/ns/sosa/hasObservableProperty>
+                prov-trace:AirTemperature .
+
+prov-trace:670761ff-baf9-4ed5-b41d-c68e39e9a12a
+        a                              ep-plan:Entity ;
+        prov:generatedAtTime           "1582029182000"^^<http://www.w3.org/2001/XMLSchema#long> ;
+        prov:invalidatedAtTime         "1582030456000"^^<http://www.w3.org/2001/XMLSchema#long> ;
+        prov:wasGeneratedBy            prov-trace:5ea2c78c-2104-4330-b99a-c34a727dd062 ;
+        ep-plan:correspondsToVariable  ucp:ChilledItem ;
+        ep-plan:isElementOfTrace       prov-trace:4b32c0f3-3a09-4dca-b1d2-824de4b266f6 ;
+        <https://w3id.org/proofd-it#deliveryID>
+                "96ca4ad5-3847-4ee0-a879-f4d187878b24" .
+
+prov-trace:0c8eb7de-0e76-419c-b9fa-3b10ef1a83a2
+        a                              ep-plan:ConstraintEvaluation ;
+        ep-plan:evaluatedTraceElement  prov-trace:c981be8e-900c-4ad8-b7b2-62f3e68b6b99 ;
+        <https://w3id.org/proofd-it#assessedBy>
+                <https://github.com/proofd-it/prov-trace#Puck/notCompliant> ;
+        <https://w3id.org/proofd-it#basedOn>
+                prov-trace:d2c5ca57-b55e-4eb4-a3a5-bafff26b03d7 .
+
+prov-trace:d2c5ca57-b55e-4eb4-a3a5-bafff26b03d7
+        a                     prov:Collection , <https://w3id.org/proofd-it#ObservationCollection> ;
+        prov:wasAttributedTo  <https://github.com/proofd-it/prov-trace#Puck/notCompliant> ;
+        prov:wasGeneratedBy   prov-trace:84f90619-8ac2-4dd2-ac67-a305e8f9adf2 ;
+        <https://w3id.org/proofd-it#average>
+                "1.6875"^^<http://www.w3.org/2001/XMLSchema#double> ;
+        <https://w3id.org/proofd-it#numberOfReadings>
+                "10"^^<http://www.w3.org/2001/XMLSchema#int> ;
+        <https://w3id.org/proofd-it#unit>
+                <http://www.ontology-of-units-of-measure.org/resource/om-2/degreeCelsius> .
+
+prov-trace:10c2b734-6012-49e7-aba0-a785ed8eb2aa
+        a                     prov:Entity , <https://w3id.org/proofd-it#SampleObservation> ;
+        prov:generatedAtTime  "1582029723000"^^<http://www.w3.org/2001/XMLSchema#long> ;
+        prov:value            "12.0"^^<http://www.w3.org/2001/XMLSchema#double> .
+
+prov-trace:a597d536-cd8f-4adb-9a22-c5f37c19d5a3
+        a                              ep-plan:Entity ;
+        ep-plan:correspondsToVariable  ucp:PackedItem ;
+        ep-plan:isElementOfTrace       prov-trace:4b32c0f3-3a09-4dca-b1d2-824de4b266f6 ;
+        <https://w3id.org/proofd-it#deliveryID>
+                "96ca4ad5-3847-4ee0-a879-f4d187878b24" .
+
+prov-trace:7cb856dd-e491-45b8-a4af-e29b54ba0e72
+        a                       <http://www.w3.org/ns/sosa/Observation> , prov:Activity , <https://w3id.org/proofd-it#MultiSensingActivity> ;
+        prov:wasAssociatedWith  <https://github.com/proofd-it/prov-trace#Puck/notCompliant> ;
+        <http://www.w3.org/ns/sosa/hasFeatureOfInterest>
+                prov-trace:882490fa-1636-4fdf-b1c9-47b6de4c7190 ;
+        <http://www.w3.org/ns/sosa/hasObservableProperty>
+                prov-trace:AirTemperature .
+
+prov-trace:f08d94b7-daae-47f6-8c8a-8f1c545b4f51
+        a                     prov:Entity , <https://w3id.org/proofd-it#SampleObservation> ;
+        prov:generatedAtTime  "1582024496000"^^<http://www.w3.org/2001/XMLSchema#long> ;
+        prov:value            "26.75"^^<http://www.w3.org/2001/XMLSchema#double> .
+
+prov-trace:6be66a95-a646-4ec7-a7ec-4a980b6d9512
+        a                     prov:Entity , <https://w3id.org/proofd-it#SampleObservation> ;
+        prov:generatedAtTime  "1582029663000"^^<http://www.w3.org/2001/XMLSchema#long> ;
+        prov:value            "12.0"^^<http://www.w3.org/2001/XMLSchema#double> .
+
+prov-trace:c981be8e-900c-4ad8-b7b2-62f3e68b6b99
+        a                          ep-plan:Activity ;
+        prov:used                  prov-trace:a597d536-cd8f-4adb-9a22-c5f37c19d5a3 ;
+        ep-plan:correspondsToStep  ucp:ColdStorage ;
+        ep-plan:isElementOfTrace   prov-trace:4b32c0f3-3a09-4dca-b1d2-824de4b266f6 ;
+        ep-plan:satisfied          ucp:ColdStorageConstraint .
+
+prov-trace:0b46a61b-bc57-4c5f-84e2-65687bd6e788
+        a                              ep-plan:ConstraintEvaluation ;
+        ep-plan:evaluatedTraceElement  prov-trace:44d0d54f-eb98-4ee0-b7cc-1843c0193241 ;
+        <https://w3id.org/proofd-it#assessedBy>
+                prov-trace:4b32c0f3-3a09-4dca-b1d2-824de4b266f6 ;
+        <https://w3id.org/proofd-it#basedOn>
+                <https://github.com/proofd-it/prov-trace#Puck/notCompliant> .
+
+prov-trace:283f0e28-edfe-4c58-a964-4245ee0c2d2a
+        a                              ep-plan:ConstraintEvaluation ;
+        ep-plan:evaluatedTraceElement  prov-trace:f7613365-fb9b-4609-b501-383365926b57 ;
+        <https://w3id.org/proofd-it#assessedBy>
+                <https://github.com/proofd-it/prov-trace#Puck/notCompliant> ;
+        <https://w3id.org/proofd-it#basedOn>
+                prov-trace:dc151687-e98f-4f99-b85b-e1dfaa6ef154 .
+
+prov-trace:39d5a3f2-3b2a-4557-bffe-5c730d4582a3
+        a                              ep-plan:Entity ;
+        prov:generatedAtTime           "1582037656000"^^<http://www.w3.org/2001/XMLSchema#long> ;
+        prov:value                     "rejected" ;
+        prov:wasGeneratedBy            prov-trace:892f1db4-830d-428e-aa7f-fd32abe2192d ;
+        ep-plan:correspondsToVariable  ucp:DeliveryResult ;
+        ep-plan:isElementOfTrace       prov-trace:4b32c0f3-3a09-4dca-b1d2-824de4b266f6 .
+
+prov-trace:44d0d54f-eb98-4ee0-b7cc-1843c0193241
+        a                       ep-plan:Activity , prov:Activity ;
+        prov:wasAssociatedWith  prov-trace:UniversityCatering ;
+        ep-plan:satisfied       ucp:TotalTimeAllowedForColdStorage , ucp:TotalTimeAllowedForAmbientTemperatureStorage ;
+        ep-plan:violated        ucp:TotalNumberOfAmbientTemperatureStorageStages .
+
+ucp:TotalTimeAllowedForAmbientTemperatureStorage
+        ep-plan:qualifiedEvaluation  prov-trace:8e569910-b8ad-4d6b-9dcf-2972986dc82a .
+
+prov-trace:8e569910-b8ad-4d6b-9dcf-2972986dc82a
+        a                              ep-plan:ConstraintEvaluation ;
+        ep-plan:evaluatedTraceElement  prov-trace:44d0d54f-eb98-4ee0-b7cc-1843c0193241 ;
+        <https://w3id.org/proofd-it#assessedBy>
+                prov-trace:4b32c0f3-3a09-4dca-b1d2-824de4b266f6 ;
+        <https://w3id.org/proofd-it#basedOn>
+                <https://github.com/proofd-it/prov-trace#Puck/notCompliant> .
+
+prov-trace:882490fa-1636-4fdf-b1c9-47b6de4c7190
+        a                              ep-plan:Entity ;
+        prov:generatedAtTime           "1582018382000"^^<http://www.w3.org/2001/XMLSchema#long> ;
+        prov:invalidatedAtTime         "1582026856000"^^<http://www.w3.org/2001/XMLSchema#long> ;
+        prov:wasGeneratedBy            prov-trace:f7613365-fb9b-4609-b501-383365926b57 ;
+        ep-plan:correspondsToVariable  ucp:OutOfColdStorageItem ;
+        ep-plan:isElementOfTrace       prov-trace:4b32c0f3-3a09-4dca-b1d2-824de4b266f6 ;
+        <https://w3id.org/proofd-it#deliveryID>
+                "96ca4ad5-3847-4ee0-a879-f4d187878b24" .
+
+prov-trace:302026ff-195a-4318-8827-9da60764d113
+        a                              ep-plan:Entity ;
+        prov:generatedAtTime           "1582037656000"^^<http://www.w3.org/2001/XMLSchema#long> ;
+        prov:wasGeneratedBy            prov-trace:892f1db4-830d-428e-aa7f-fd32abe2192d ;
+        ep-plan:correspondsToVariable  ucp:DeliveredItem ;
+        ep-plan:isElementOfTrace       prov-trace:4b32c0f3-3a09-4dca-b1d2-824de4b266f6 ;
+        <https://w3id.org/proofd-it#deliveryID>
+                "96ca4ad5-3847-4ee0-a879-f4d187878b24" .
+
+prov-trace:8b26dd5b-213a-4759-9dd9-0e9189b419ac
+        a                     prov:Entity , <https://w3id.org/proofd-it#SampleObservation> ;
+        prov:generatedAtTime  "1582029296000"^^<http://www.w3.org/2001/XMLSchema#long> ;
+        prov:value            "13.0"^^<http://www.w3.org/2001/XMLSchema#double> .
+
+ucp:TotalNumberOfAmbientTemperatureStorageStages
+        ep-plan:qualifiedEvaluation  prov-trace:e1d26bf6-a5af-4f15-8357-8d3c47dd0df1 .
+
+prov-trace:26ef5533-3fb0-4223-b8c1-9b671ca6c10d
+        a                     prov:Entity , <https://w3id.org/proofd-it#SampleObservation> ;
+        prov:generatedAtTime  "1582022764000"^^<http://www.w3.org/2001/XMLSchema#long> ;
+        prov:value            "26.8125"^^<http://www.w3.org/2001/XMLSchema#double> .
+
+prov-trace:cecb4dad-30ef-48e3-aa78-eeae7111ce0d
+        a                       <http://www.w3.org/ns/sosa/Observation> , prov:Activity , <https://w3id.org/proofd-it#MultiSensingActivity> ;
+        prov:wasAssociatedWith  <https://github.com/proofd-it/prov-trace#Puck/notCompliant> ;
+        <http://www.w3.org/ns/sosa/hasFeatureOfInterest>
+                prov-trace:0979cb7b-6386-4cb6-a171-3278c404ce80 ;
+        <http://www.w3.org/ns/sosa/hasObservableProperty>
+                prov-trace:AirTemperature .
+
+ucp:AmbientStorageConstraint
+        ep-plan:qualifiedEvaluation  prov-trace:7cf22e8c-cad5-46db-96ad-240eec567f60 , prov-trace:283f0e28-edfe-4c58-a964-4245ee0c2d2a .
+
+prov-trace:17beaecf-208c-4cfe-a0e9-29d56d73139a
+        a                     prov:Entity , <https://w3id.org/proofd-it#SampleObservation> ;
+        prov:generatedAtTime  "1582029603000"^^<http://www.w3.org/2001/XMLSchema#long> ;
+        prov:value            "12.0"^^<http://www.w3.org/2001/XMLSchema#double> .
+
+prov-trace:0979cb7b-6386-4cb6-a171-3278c404ce80
+        a                              ep-plan:Entity ;
+        prov:generatedAtTime           "1582034042000"^^<http://www.w3.org/2001/XMLSchema#long> ;
+        prov:invalidatedAtTime         "1582037656000"^^<http://www.w3.org/2001/XMLSchema#long> ;
+        prov:wasGeneratedBy            prov-trace:a166cd58-9065-4573-b84c-3035d9ca19fc ;
+        ep-plan:correspondsToVariable  ucp:OutOfColdStorageItem ;
+        ep-plan:isElementOfTrace       prov-trace:4b32c0f3-3a09-4dca-b1d2-824de4b266f6 ;
+        <https://w3id.org/proofd-it#deliveryID>
+                "96ca4ad5-3847-4ee0-a879-f4d187878b24" .
+
+prov-trace:791dc6eb-3873-4667-a3ec-154e29643e57
+        a                              ep-plan:ConstraintEvaluation ;
+        ep-plan:evaluatedTraceElement  prov-trace:5ea2c78c-2104-4330-b99a-c34a727dd062 ;
+        <https://w3id.org/proofd-it#assessedBy>
+                <https://github.com/proofd-it/prov-trace#Puck/notCompliant> ;
+        <https://w3id.org/proofd-it#basedOn>
+                prov-trace:0014e5b5-24eb-4c66-a9fb-69ac43929c21 .
+
+prov-trace:41b76b9d-eaaa-4888-9d48-c237c0bf230e
+        a                     prov:Collection , <https://w3id.org/proofd-it#ObservationCollection> ;
+        prov:wasAttributedTo  <https://github.com/proofd-it/prov-trace#Puck/notCompliant> ;
+        prov:wasGeneratedBy   prov-trace:cecb4dad-30ef-48e3-aa78-eeae7111ce0d ;
+        <https://w3id.org/proofd-it#average>
+                "21.3"^^<http://www.w3.org/2001/XMLSchema#double> ;
+        <https://w3id.org/proofd-it#numberOfReadings>
+                "11"^^<http://www.w3.org/2001/XMLSchema#int> ;
+        <https://w3id.org/proofd-it#unit>
+                <http://www.ontology-of-units-of-measure.org/resource/om-2/degreeCelsius> .
+
+prov-trace:1d1667ce-c507-416c-9f20-13a42c72c203
+        a                     prov:Entity , <https://w3id.org/proofd-it#SampleObservation> ;
+        prov:generatedAtTime  "1582026734000"^^<http://www.w3.org/2001/XMLSchema#long> ;
+        prov:value            "28.25"^^<http://www.w3.org/2001/XMLSchema#double> .
+
+ucp:TotalTimeAllowedForColdStorage
+        ep-plan:qualifiedEvaluation  prov-trace:0b46a61b-bc57-4c5f-84e2-65687bd6e788 .
+
+prov-trace:84f90619-8ac2-4dd2-ac67-a305e8f9adf2
+        a                       <http://www.w3.org/ns/sosa/Observation> , prov:Activity , <https://w3id.org/proofd-it#MultiSensingActivity> ;
+        prov:wasAssociatedWith  <https://github.com/proofd-it/prov-trace#Puck/notCompliant> ;
+        <http://www.w3.org/ns/sosa/hasFeatureOfInterest>
+                prov-trace:e48f85f6-d021-43b0-9cfb-43d5a4eafeca ;
+        <http://www.w3.org/ns/sosa/hasObservableProperty>
+                prov-trace:AirTemperature .
+
+prov-trace:4b32c0f3-3a09-4dca-b1d2-824de4b266f6
+        a                     ep-plan:ExecutionTraceBundle ;
+        prov:wasDerivedFrom   ucp:UniversityCateringSandwichDeliveryPlan ;
+        prov:wasInfluencedBy  prov-trace:44d0d54f-eb98-4ee0-b7cc-1843c0193241 .
+
+prov-trace:a166cd58-9065-4573-b84c-3035d9ca19fc
+        a                          ep-plan:Activity ;
+        prov:used                  prov-trace:670761ff-baf9-4ed5-b41d-c68e39e9a12a ;
+        ep-plan:correspondsToStep  ucp:AmbientTemperatureStorage ;
+        ep-plan:isElementOfTrace   prov-trace:4b32c0f3-3a09-4dca-b1d2-824de4b266f6 ;
+        ep-plan:satisfied          ucp:AmbientStorageConstraint .
+
+prov-trace:e48f85f6-d021-43b0-9cfb-43d5a4eafeca
+        a                              ep-plan:Entity ;
+        prov:generatedAtTime           "1581983457000"^^<http://www.w3.org/2001/XMLSchema#long> ;
+        prov:invalidatedAtTime         "1582018382000"^^<http://www.w3.org/2001/XMLSchema#long> ;
+        prov:wasGeneratedBy            prov-trace:c981be8e-900c-4ad8-b7b2-62f3e68b6b99 ;
+        ep-plan:correspondsToVariable  ucp:ChilledItem ;
+        ep-plan:isElementOfTrace       prov-trace:4b32c0f3-3a09-4dca-b1d2-824de4b266f6 ;
+        <https://w3id.org/proofd-it#deliveryID>
+                "96ca4ad5-3847-4ee0-a879-f4d187878b24" .
+
+prov-trace:f7613365-fb9b-4609-b501-383365926b57
+        a                          ep-plan:Activity ;
+        prov:used                  prov-trace:e48f85f6-d021-43b0-9cfb-43d5a4eafeca ;
+        ep-plan:correspondsToStep  ucp:AmbientTemperatureStorage ;
+        ep-plan:isElementOfTrace   prov-trace:4b32c0f3-3a09-4dca-b1d2-824de4b266f6 ;
+        ep-plan:violated           ucp:AmbientStorageConstraint .
+
+prov-trace:5ea2c78c-2104-4330-b99a-c34a727dd062
+        a                          ep-plan:Activity ;
+        prov:used                  prov-trace:882490fa-1636-4fdf-b1c9-47b6de4c7190 ;
+        ep-plan:correspondsToStep  ucp:ColdStorage ;
+        ep-plan:isElementOfTrace   prov-trace:4b32c0f3-3a09-4dca-b1d2-824de4b266f6 ;
+        ep-plan:violated           ucp:ColdStorageConstraint .
+
+prov-trace:1e116b37-1de1-4e1d-a1c8-974b4f36f55b
+        a                     prov:Entity , <https://w3id.org/proofd-it#SampleObservation> ;
+        prov:generatedAtTime  "1582025343000"^^<http://www.w3.org/2001/XMLSchema#long> ;
+        prov:value            "26.5"^^<http://www.w3.org/2001/XMLSchema#double> .
+
+prov-trace:0014e5b5-24eb-4c66-a9fb-69ac43929c21
+        a                     <https://w3id.org/proofd-it#ObservationCollection> , prov:Collection ;
+        prov:hadMember        prov-trace:8b26dd5b-213a-4759-9dd9-0e9189b419ac , prov-trace:9da588db-480d-4b36-b44b-697be40063df , prov-trace:17beaecf-208c-4cfe-a0e9-29d56d73139a , prov-trace:10c2b734-6012-49e7-aba0-a785ed8eb2aa , prov-trace:6be66a95-a646-4ec7-a7ec-4a980b6d9512 ;
+        prov:wasAttributedTo  <https://github.com/proofd-it/prov-trace#Puck/notCompliant> ;
+        prov:wasGeneratedBy   prov-trace:a19e6246-75a4-414b-9a32-5140df168b4a ;
+        <https://w3id.org/proofd-it#average>
+                "11.2"^^<http://www.w3.org/2001/XMLSchema#double> ;
+        <https://w3id.org/proofd-it#numberOfReadings>
+                "11"^^<http://www.w3.org/2001/XMLSchema#int> ;
+        <https://w3id.org/proofd-it#unit>
+                <http://www.ontology-of-units-of-measure.org/resource/om-2/degreeCelsius> .
+
+prov-trace:892f1db4-830d-428e-aa7f-fd32abe2192d
+        a                          ep-plan:Activity ;
+        prov:used                  prov-trace:0979cb7b-6386-4cb6-a171-3278c404ce80 ;
+        ep-plan:correspondsToStep  ucp:RecievedByCustomer ;
+        ep-plan:isElementOfTrace   prov-trace:4b32c0f3-3a09-4dca-b1d2-824de4b266f6 .
+
+prov-trace:7cf22e8c-cad5-46db-96ad-240eec567f60
+        a                              ep-plan:ConstraintEvaluation ;
+        ep-plan:evaluatedTraceElement  prov-trace:a166cd58-9065-4573-b84c-3035d9ca19fc ;
+        <https://w3id.org/proofd-it#assessedBy>
+                <https://github.com/proofd-it/prov-trace#Puck/notCompliant> ;
+        <https://w3id.org/proofd-it#basedOn>
+                prov-trace:41b76b9d-eaaa-4888-9d48-c237c0bf230e .
+
+prov-trace:dc151687-e98f-4f99-b85b-e1dfaa6ef154
+        a                     <https://w3id.org/proofd-it#ObservationCollection> , prov:Collection ;
+        prov:hadMember        prov-trace:1d1667ce-c507-416c-9f20-13a42c72c203 , prov-trace:f08d94b7-daae-47f6-8c8a-8f1c545b4f51 , prov-trace:1e116b37-1de1-4e1d-a1c8-974b4f36f55b , prov-trace:44d07de2-8af4-49e4-af61-d29cafeb6a75 , prov-trace:26ef5533-3fb0-4223-b8c1-9b671ca6c10d , prov-trace:a60e8669-52b3-4e17-8db7-db6b09db1ad9 ;
+        prov:wasAttributedTo  <https://github.com/proofd-it/prov-trace#Puck/notCompliant> ;
+        prov:wasGeneratedBy   prov-trace:7cb856dd-e491-45b8-a4af-e29b54ba0e72 ;
+        <https://w3id.org/proofd-it#average>
+                "27.79949951171"^^<http://www.w3.org/2001/XMLSchema#double> ;
+        <https://w3id.org/proofd-it#numberOfReadings>
+                "11"^^<http://www.w3.org/2001/XMLSchema#int> ;
+        <https://w3id.org/proofd-it#unit>
+                <http://www.ontology-of-units-of-measure.org/resource/om-2/degreeCelsius> .
+
+prov-trace:e1d26bf6-a5af-4f15-8357-8d3c47dd0df1
+        a                              ep-plan:ConstraintEvaluation ;
+        ep-plan:evaluatedTraceElement  prov-trace:44d0d54f-eb98-4ee0-b7cc-1843c0193241 ;
+        <https://w3id.org/proofd-it#assessedBy>
+                prov-trace:4b32c0f3-3a09-4dca-b1d2-824de4b266f6 ;
+        <https://w3id.org/proofd-it#basedOn>
+                <https://github.com/proofd-it/prov-trace#Puck/notCompliant> .
+
+prov-trace:44d07de2-8af4-49e4-af61-d29cafeb6a75
+        a                     prov:Entity , <https://w3id.org/proofd-it#SampleObservation> ;
+        prov:generatedAtTime  "1582023755000"^^<http://www.w3.org/2001/XMLSchema#long> ;
+        prov:value            "27.25"^^<http://www.w3.org/2001/XMLSchema#double> .
+
+ucp:ColdStorageConstraint
+        ep-plan:qualifiedEvaluation  prov-trace:791dc6eb-3873-4667-a3ec-154e29643e57 , prov-trace:0c8eb7de-0e76-419c-b9fa-3b10ef1a83a2 .
+
+prov-trace:9da588db-480d-4b36-b44b-697be40063df
+        a                     prov:Entity , <https://w3id.org/proofd-it#SampleObservation> ;
+        prov:generatedAtTime  "1582029543000"^^<http://www.w3.org/2001/XMLSchema#long> ;
+        prov:value            "10.0"^^<http://www.w3.org/2001/XMLSchema#double> .
+
+prov-trace:AirTemperature
+        a       <http://www.w3.org/ns/sosa/ObservableProperty> .
+
+<https://github.com/proofd-it/prov-trace#Puck/notCompliant>
+        a       <http://www.w3.org/ns/sosa/Sensor> , prov:Agent .
+
+prov-trace:UniversityCatering
+        a       prov:Agent .

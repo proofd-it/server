@@ -1,0 +1,233 @@
+@prefix : <https://w3id.org/abdn/foodsafety/fs-prov#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <https://w3id.org/abdn/foodsafety/fs-prov> .
+
+<https://w3id.org/abdn/foodsafety/fs-prov> rdf:type owl:Ontology ;
+                                            <http://purl.org/dc/terms/created> "2016-02-01T21:32:52+00:00"^^xsd:dateTime ;
+                                            <http://purl.org/dc/terms/creator> "Milan Markovic" ,
+                                                                               "Peter Edwards" ;
+                                            <http://purl.org/dc/terms/description> """ 
+        An ontology for describing provenance of HACCP-based workflows.
+        """ ;
+                                            <http://purl.org/dc/terms/rights> "Copyright © 2016 University of Aberdeen" ;
+                                            <http://purl.org/dc/terms/title> "FS-PROV: An ontology for describing provenance of HACCP-based workflows" ;
+                                            <http://web.resource.org/cc/license> <http://creativecommons.org/licenses/by-sa/3.0/> ;
+                                            rdfs:isDefinedBy "" ;
+                                            rdfs:label """ 
+        FS-PROV Ontology.
+        """ ;
+                                            owl:versionInfo "1.0.0" .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/terms/created
+<http://purl.org/dc/terms/created> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/creator
+<http://purl.org/dc/terms/creator> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/description
+<http://purl.org/dc/terms/description> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/rights
+<http://purl.org/dc/terms/rights> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/title
+<http://purl.org/dc/terms/title> rdf:type owl:AnnotationProperty .
+
+
+###  http://web.resource.org/cc/license
+<http://web.resource.org/cc/license> rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#entity
+:entity rdf:type owl:ObjectProperty ;
+        rdfs:domain owl:Thing ;
+        rdfs:range :WorkflowEntity ;
+        rdfs:comment """ 
+        A relation that links the instantiation of some fs-prov:Resource to an sc-prov:EvaluationContext. 
+        The fs-prov:Resource should be restricted by an fs-prov:Constraint which is also linked to the same sc-prov:EvaluationContext
+        """ .
+
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#hasConstraintParameter
+:hasConstraintParameter rdf:type owl:ObjectProperty ;
+                        rdfs:domain :Constraint ;
+                        rdfs:range :Parameter ;
+                        rdfs:comment """ 
+        An fs-prov:hasConstraintParameter links instantiations of  fs-prov: Parameter as a source of parameter values  for an fs-prov:Constraint.
+        """ .
+
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#hasGoal
+:hasGoal rdf:type owl:ObjectProperty ;
+         rdfs:domain :Plan ;
+         rdfs:range :Resource ;
+         rdfs:comment """ 
+         A relation that links an instance of a plan to the final expected product denoted as an fs-prov:Resource.
+         """ .
+
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#inContextOf
+:inContextOf rdf:type owl:ObjectProperty ;
+             rdfs:domain :Parameter ;
+             rdfs:range :Resource ;
+             rdfs:comment """ 
+        A property that defines which fs-prov:Resource is associated with a property described as an fs-prov:Parameter.
+        """ .
+
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#instantiatedByActivity
+:instantiatedByActivity rdf:type owl:ObjectProperty ;
+                        rdfs:domain :Step ;
+                        rdfs:range :WorkflowActivity ;
+                        rdfs:comment """ 
+        A property that links an fs-prov:Step to its instantiation in  a workflow execution described by a prov:Activity. 
+        """ .
+
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#instantiatedByEntity
+:instantiatedByEntity rdf:type owl:ObjectProperty ;
+                      rdfs:domain :Resource ;
+                      rdfs:range :WorkflowEntity ;
+                      rdfs:comment """ 
+        A property that links an fs-prov:Resource to its instantiation in  a workflow execution described by a prov:Entity. 
+        """ .
+
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#isOptionalResourceFor
+:isOptionalResourceFor rdf:type owl:ObjectProperty ;
+                       rdfs:domain :Resource ;
+                       rdfs:range :Step ;
+                       rdfs:comment """ 
+         A property that links an fs-prov:Step to an fs-prov: Resource which could  be used by the instantiation of this step. 
+        """ .
+
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#isRequiredResourceFor
+:isRequiredResourceFor rdf:type owl:ObjectProperty ;
+                       rdfs:domain :Resource ;
+                       rdfs:range :Step ;
+                       rdfs:comment """ 
+        A property that links an fs-prov:Step to an fs-prov: Resource which has to be used by the instantiation of this step. 
+        """ .
+
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#isResultOf
+:isResultOf rdf:type owl:ObjectProperty ;
+            rdfs:domain :Resource ;
+            rdfs:range :Step ;
+            rdfs:comment """ 
+        A property that links an fs-prov:Step to its expected product described as fs-prov: Resource. 
+        """ .
+
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#restrics
+:restrics rdf:type owl:ObjectProperty ;
+          rdfs:domain :Constraint ;
+          rdfs:range :Resource ;
+          rdfs:comment """ 
+        A property that associates restrictions identified by an fs-prov:Constraint with a specific fs-prov:Resource. 
+        """ .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#Constraint
+:Constraint rdf:type owl:Class ;
+            rdfs:comment """ 
+        An fs-prov: Constraint identifies a logical statement that describes some restrictions on fs-prov:Resource in the context of an fs-prov:Step. 
+        """ .
+
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#HaccpConstraint
+:HaccpConstraint rdf:type owl:Class ;
+                 rdfs:subClassOf :Constraint ;
+                 rdfs:comment """ 
+                An fs-prov: HACCPConstraint identifies a logical statement that describes some restrictions on an 
+                fs-prov:Resource in the context of an fs-prov:HACCPStep. fs-prov: HACCPConstraint is typically defined 
+                in the context of maximum or minimum threshold values of some properties relating to an fs-prov:Resource
+                """ .
+
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#HaccpStep
+:HaccpStep rdf:type owl:Class ;
+           rdfs:subClassOf :Step ;
+           rdfs:comment """ 
+           An fs-prov: HACCPStep denotes parts of a workflow plan which represent expected HACCP-regulated activities 
+           that transform fs-prov: PhysicalObject(s).
+           """ .
+
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#Parameter
+:Parameter rdf:type owl:Class ;
+           rdfs:subClassOf :Resource ;
+           rdfs:comment """ 
+           An fs-prov: Parameter denotes parts of a workflow plan, which can be used by an fs-prov:Constraint 
+           to determine variables of a restriction defined by fs-prov:Constraint. 
+           """ .
+
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#PhysicalObject
+:PhysicalObject rdf:type owl:Class ;
+                rdfs:subClassOf :Resource ;
+                rdfs:comment """ 
+                An fs-prov: PhysicalObject represents a certain type of non-virtual entity that can be used or produced by an fs-prov:Step.
+                """ .
+
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#Plan
+:Plan rdf:type owl:Class ;
+      rdfs:comment """ 
+An fs-prov:Plan is a specific type of p-plan:Plan. It is composed of fs-prov:Step(s), fs-prov:Resource(s) and fs-prov:Constraint(s). 
+Individual concept mentions are expected to represent a specific part of a single unique plan.  
+Hence, URI’s of these concepts are not to be reused in other plans or even within the same plan. 
+""" .
+
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#Resource
+:Resource rdf:type owl:Class ;
+          rdfs:comment """ 
+An fs-prov: Resource denotes parts of a workflow plan, which can be used by an 
+fs-prov:Step and fs-prov:Constraint or produced by an fs-prov:Step.  
+""" .
+
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#Step
+:Step rdf:type owl:Class ;
+      rdfs:comment """ 
+An fs-prov: Step denotes parts of a workflow plan which represent expected activities that transform fs-prov: Resource(s).  
+""" .
+
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#WorkflowActivity
+:WorkflowActivity rdf:type owl:Class ;
+                  rdfs:comment """ 
+An fs-prov: WorkflowActivity is a subclass of prov:Activity and represents an instantiation of fs-prov:Step during a workflow execution.   
+""" .
+
+
+###  https://w3id.org/abdn/foodsafety/fs-prov#WorkflowEntity
+:WorkflowEntity rdf:type owl:Class ;
+                rdfs:comment """ 
+An fs-prov: WorkflowEntity is a subclass of prov:Entity and represents an instantiation of fs-prov:Resorce during a workflow execution.  
+""" .
+
+
+###  Generated by the OWL API (version 5.1.9) https://github.com/owlcs/owlapi/

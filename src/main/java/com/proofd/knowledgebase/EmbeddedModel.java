@@ -1,4 +1,4 @@
-package com.proofd.knowledgbase;
+package com.proofd.knowledgebase;
 
 import java.io.InputStream;
 
