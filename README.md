@@ -23,7 +23,7 @@ You will need to provide `APP_MASTER_USERNAME` and `APP_MASTER_PASSWORD` to the 
 
 # Competency questions evaluation
 
-The code also contains a package com.proofd.evaluate. You can re-run the competency questions evaluation by running the main method in RunEval.java. The code will use files in the resource folder which contain local copies of the required ontologies, university catering delivery plan, and a sample execution trace for a non-compliant use case (i.e. this produces the richest provenance records) which was produced by the server app 
+The code also contains a package com.proofd.evaluate. The SPARQL queries can be found in server/src/main/java/com/proofd/evaluate/EvalQueries.java.  You can re-run the competency questions evaluation by running the main method in RunEval.java. The code will use files in the resource folder which contain local copies of the required ontologies, university catering delivery plan, and a sample execution trace for a non-compliant use case (i.e. this produces the richest provenance records) which was produced by the server app 
 
 # Expected Result 
 
